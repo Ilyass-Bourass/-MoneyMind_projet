@@ -17,6 +17,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->decimal('salaire_mensuel', 10, 2)->nullable();
+            $table->decimal('montant_restant', 10, 2)->nullable();
+            $table->integer('date_credit')->nullable();
+            $table->enum('role', ['user', 'admin'])->default('user');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'salaire_mensuel',
+        'date_credit',
+        'montant_restant',
+        'role'
     ];
 
     /**
@@ -45,4 +49,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    public function depances()
+    {
+        return $this->hasMany(Depance::class);
+    }
+
+    public function diminution_montant_restant($montant)
+    {
+        $this->montant_restant -= $montant;
+        $this->save();
+    }
+
+    public function augmentation_montant_restant($montant)
+    {
+        $this->montant_restant += $montant;
+        $this->save();
+    }
+    
 }
