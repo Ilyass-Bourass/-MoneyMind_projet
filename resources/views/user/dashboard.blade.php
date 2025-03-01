@@ -59,9 +59,10 @@
                                 </div>
                                 <span class="text-sm text-gray-500">Objectif Épargne</span>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900">100€</h3>
+                            <h3 class="text-xl font-bold text-gray-900">{{$objectif_mensuel}} DH</h3>
                             <div class="mt-2 bg-gray-200 rounded-full h-1.5">
-                                <div class="bg-purple-600 h-1.5 rounded-full" style="width:50%"></div>
+                                <div class="bg-purple-600 h-1.5 rounded-full" style="width:{{5000/ $objectif_mensuel * 100}}%"></div>
+                            <p class="text-xs text-red-500 mt-1">{{number_format((5000 / $objectif_mensuel * 100), 1)}}% atteint</p>
                             </div>
                         </div>
 
@@ -74,7 +75,7 @@
                                 <span class="text-sm text-gray-500">Dépense Principale</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-900">Alimentation</h3>
-                            <p class="text-sm text-gray-500">300 €</p>
+                            <h6 class="text-xl font-bold text-gray-900">{{$total_depense_alimentation}} DH</h6>
                         </div>
                     </div>
 
@@ -99,101 +100,119 @@
     </div>
 
     <script>
-        // Données des dépenses
-        const depensesData = {
-            labels: ['Alimentation', 'Transport', 'Loisirs', 'Factures', 'Shopping'],
-            datasets: [{
-                data: [300, 150, 100, 200, 250],
-                backgroundColor: [
-                    'rgba(99, 102, 241, 0.8)',    // Indigo
-                    'rgba(16, 185, 129, 0.8)',    // Emerald
-                    'rgba(249, 115, 22, 0.8)',    // Orange
-                    'rgba(239, 68, 68, 0.8)',     // Rouge
-                    'rgba(168, 85, 247, 0.8)'     // Violet
-                ],
-                borderColor: [
-                    'rgb(99, 102, 241)',
-                    'rgb(16, 185, 129)',
-                    'rgb(249, 115, 22)',
-                    'rgb(239, 68, 68)',
-                    'rgb(168, 85, 247)'
-                ],
-                borderWidth: 2,
-                borderRadius: 8,
-                spacing: 10,
-                hoverOffset: 15
-            }]
-        };
+        fetch('/get-depance-par-categorie', {
+            headers: {
+                'Accept': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Données reçues:', data);
+            
+            
+            const depensesData = {
+                labels: data.map(item => item.categorie),
+                datasets: [{
+                    data: data.map(item => parseFloat(item.montant)),
+                    backgroundColor: [
+                        'rgba(99, 102, 241, 0.8)',    // Indigo
+                        'rgba(16, 185, 129, 0.8)',    // Emerald
+                        'rgba(249, 115, 22, 0.8)',    // Orange
+                        'rgba(239, 68, 68, 0.8)',     // Rouge
+                        'rgba(168, 85, 247, 0.8)'     // Violet
+                    ],
+                    borderColor: [
+                        'rgb(99, 102, 241)',
+                        'rgb(16, 185, 129)',
+                        'rgb(249, 115, 22)',
+                        'rgb(239, 68, 68)',
+                        'rgb(168, 85, 247)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8,
+                    spacing: 10,
+                    hoverOffset: 15
+                }]
+            };
 
-        // Calcul du total
-        const total = depensesData.datasets[0].data.reduce((a, b) => a + b, 0);
+            
+            const total = depensesData.datasets[0].data.reduce((a, b) => a + b, 0);
 
-        // Configuration du graphique
-        const config = {
-            type: 'pie',  // Changement pour un graphique en secteurs
-            data: depensesData,
-            options: {
-                responsive: true,
-                maintainAspectRatio: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                const value = context.raw;
-                                const percentage = ((value / total) * 100).toFixed(1);
-                                return `${value}€ (${percentage}%)`;
+            
+            const config = {
+                type: 'pie',
+                data: depensesData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const value = context.raw;
+                                    const percentage = ((value / total) * 100).toFixed(1);
+                                    return `${value.toFixed(2)} DH (${percentage}%)`;
+                                }
                             }
                         }
+                    },
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
                     }
-                },
-                animation: {
-                    animateRotate: true,
-                    animateScale: true
                 }
-            }
-        };
+            };
 
-        // Création du graphique
-        const myChart = new Chart(
-            document.getElementById('depensesChart'),
-            config
-        );
-
-        // Création de la légende détaillée avec interactivité
-        const legende = document.getElementById('legendeDetaillee');
-        depensesData.labels.forEach((label, index) => {
-            const montant = depensesData.datasets[0].data[index];
-            const pourcentage = ((montant / total) * 100).toFixed(1);
-            const couleur = depensesData.datasets[0].backgroundColor[index];
             
-            const legendeItem = document.createElement('div');
-            legendeItem.className = 'flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 cursor-pointer';
-            legendeItem.innerHTML = `
-                <div class="flex items-center space-x-3">
-                    <div class="w-3 h-3 rounded" style="background-color: ${couleur}"></div>
-                    <span class="font-medium text-sm">${label}</span>
-                </div>
-                <div class="text-right">
-                    <span class="font-bold text-sm">${montant}€</span>
-                    <span class="text-xs text-gray-500 ml-2">${pourcentage}%</span>
-                </div>
-            `;
+            const myChart = new Chart(
+                document.getElementById('depensesChart'),
+                config
+            );
 
-            // Ajout d'interactivité
-            legendeItem.addEventListener('mouseenter', () => {
-                myChart.setActiveElements([{datasetIndex: 0, index: index}]);
-                myChart.update();
+           
+            const legende = document.getElementById('legendeDetaillee');
+            legende.innerHTML = ''; 
+            
+            depensesData.labels.forEach((label, index) => {
+                const montant = depensesData.datasets[0].data[index];
+                const pourcentage = ((montant / total) * 100).toFixed(1);
+                const couleur = depensesData.datasets[0].backgroundColor[index];
+                
+                const legendeItem = document.createElement('div');
+                legendeItem.className = 'flex items-center justify-between p-2 rounded-lg hover:bg-gray-50 cursor-pointer';
+                legendeItem.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-3 h-3 rounded" style="background-color: ${couleur}"></div>
+                        <span class="font-medium text-sm">${label}</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="font-bold text-sm">${montant.toFixed(2)} DH</span>
+                        <span class="text-xs text-gray-500 ml-2">${pourcentage}%</span>
+                    </div>
+                `;
+
+                
+                legendeItem.addEventListener('mouseenter', () => {
+                    myChart.setActiveElements([{datasetIndex: 0, index: index}]);
+                    myChart.update();
+                });
+
+                legendeItem.addEventListener('mouseleave', () => {
+                    myChart.setActiveElements([]);
+                    myChart.update();
+                });
+
+                legende.appendChild(legendeItem);
             });
-
-            legendeItem.addEventListener('mouseleave', () => {
-                myChart.setActiveElements([]);
-                myChart.update();
-            });
-
-            legende.appendChild(legendeItem);
+        })
+        .catch(error => {
+            console.error('Erreur:', error);
+            document.getElementById('depensesChart').innerHTML = 
+                '<div class="text-center text-red-500">Erreur lors du chargement des données</div>';
         });
     </script>
 </body>

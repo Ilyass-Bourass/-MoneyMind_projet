@@ -52,6 +52,20 @@
             <x-input-error :messages="$errors->get('salaire_mensuel')" class="mt-2" />
         </div>
 
+        <!-- Objectif Mensuel -->
+        <div class="mt-4">
+            <x-input-label for="objectif_mensuel" :value="__('Objectif Mensuel')" />
+            <x-text-input id="objectif_mensuel" 
+                          class="block mt-1 w-full" 
+                          type="number"  
+                          step="0.01"
+                          name="objectif_mensuel" 
+                          :value="old('objectif_mensuel')" 
+                          required />
+            <x-input-error :messages="$errors->get('objectif_mensuel')" class="mt-2" />
+        </div>
+        
+
         <!-- Date de Crédit -->
         <div class="mt-4">
             <x-input-label for="date_credit" :value="__('Date de Crédit (1-31)')" />

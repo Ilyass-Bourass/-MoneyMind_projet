@@ -6,6 +6,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepanceController;
+use App\Http\Controllers\ListeSouhaitController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,7 +23,15 @@ Route::middleware(['auth'])->group(function () {
    Route::get('/depance',[DepanceController::class,'index'])->name('depance');
    Route::post('/depance/store', [DepanceController::class, 'store'])->name('depance.store');
    Route::delete('/depance/destroy/{depance}', [DepanceController::class, 'destroy'])->name('depance.destroy');
+   Route::get('/listeSouhait',[ListeSouhaitController::class,'index'])->name('listeSouhait');
+   Route::post('/listeSouhait/store', [ListeSouhaitController::class, 'store'])->name('listeSouhait.store');
+   Route::delete('/listeSouhait/destroy/{id}', [ListeSouhaitController::class, 'destroy'])->name('listeSouhait.destroy');
+   Route::get('/get-depance-par-categorie', function() {
 
+        $depenses = \App\Models\Depance::get_depance_par_categorie();
+        return response()->json($depenses);
+   
+})->middleware('auth');
 });
 
 

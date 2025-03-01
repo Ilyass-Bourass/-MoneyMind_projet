@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'salaire_mensuel',
+        'objectif_mensuel',
+        'salaire_sauve',
         'date_credit',
         'montant_restant',
         'role'
@@ -64,6 +66,11 @@ class User extends Authenticatable
     {
         $this->montant_restant += $montant;
         $this->save();
+    }
+
+    public function listeSouhaits()
+    {
+        return $this->hasMany(ListeSouhait::class);
     }
     
 }

@@ -35,6 +35,7 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'salaire_mensuel' => ['required', 'numeric', 'min:0'],
+            'objectif_mensuel' => ['required', 'numeric', 'min:0'],
             'date_credit' => ['required', 'integer', 'min:1', 'max:31'],
         ]);
         
@@ -46,18 +47,20 @@ class RegisteredUserController extends Controller
             'salaire_mensuel' => $request->salaire_mensuel,
             'date_credit' => $request->date_credit,
             'montant_restant' => $request->salaire_mensuel,
+            'objectif_mensuel' => $request->objectif_mensuel,
+            'salaire_sauve' => 0,
             'role' => 'user',
         ]);
         
         event(new Registered($user));
 
-        Auth::login($user);
+        // Auth::login($user);
         // if($user->isAdmin()){
         //     return redirect(route('admin', absolute: false));
         // }elseif($user->isUser()){
         //     return redirect(route('dashboard', absolute: false));
         // }
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect(route('login', absolute: false));
     }
 }

@@ -38,7 +38,7 @@
         </a>
 
         <!-- Liste de souhaits -->
-        <a href="#" class="group flex items-center space-x-3 px-4 py-3.5 rounded-xl text-gray-600 hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50 transition-all duration-300">
+        <a href="{{route('listeSouhait')}}" class="group flex items-center space-x-3 px-4 py-3.5 rounded-xl text-gray-600 hover:bg-gradient-to-r hover:from-rose-50 hover:to-pink-50 transition-all duration-300">
             <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-tr from-rose-100 to-pink-100 group-hover:from-rose-200 group-hover:to-pink-200 transition-all duration-300">
                 <i class="fas fa-gift text-rose-600 group-hover:scale-110 transition-transform"></i>
             </div>

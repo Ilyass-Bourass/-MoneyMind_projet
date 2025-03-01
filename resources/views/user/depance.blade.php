@@ -38,7 +38,7 @@
                                     <i class="fas fa-clock text-blue-700 mr-3 text-lg"></i>
                                     Dépenses Quotidiennes
                                 </h2>
-                                <p class="text-sm text-blue-600 mt-1">Suivi journalier de vos dépenses</p>
+                                <p class="text-sm text-blue-600 mt-1">Total des dépenses quotidiennes par rapport au salaire mensuel</p>
                             </div>
                             <div class="bg-gradient-to-r from-blue-600 to-blue-800 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-3">
                                 <span class="text-sm font-medium opacity-90">Total:</span>
@@ -107,7 +107,7 @@
                                     <i class="fas fa-repeat text-purple-700 mr-3 text-lg"></i>
                                     Dépenses Récurrentes
                                 </h2>
-                                <p class="text-sm text-purple-600 mt-1">Gestion des paiements réguliers</p>
+                                <p class="text-sm text-purple-600 mt-1">Total des dépenses récurrentes par rapport au salaire mensuel</p>
                             </div>
                             <div class="bg-gradient-to-r from-purple-600 to-purple-800 text-white px-6 py-3 rounded-xl shadow-lg flex items-center space-x-3">
                                 <span class="text-sm font-medium opacity-90">Total:</span>

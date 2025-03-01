@@ -13,6 +13,14 @@ class CategorieSeeder extends Seeder
      */
     public function run(): void
     {
-        Categorie::factory()->count(5)->create();
+        Categorie::factory()->create([
+            'nom' => 'sport',
+        ]);
+        Categorie::factory()->create([
+            'nom' => 'alimentation',
+        ]);
+        Categorie::factory()->create([
+            'nom' => 'transport',
+        ]);
     }
 }

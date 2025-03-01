@@ -3,11 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\ListeSouhait;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Categorie>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ListeSouhait>
  */
-class CategorieFactory extends Factory
+class ListeSouhaitFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +18,8 @@ class CategorieFactory extends Factory
     public function definition(): array
     {
         return [
-            'nom' => 'sport',
+            'nom' => 'téléphone iPhone 16 Pro Max',
+            'montant' => 1000,
         ];
     }
 }
