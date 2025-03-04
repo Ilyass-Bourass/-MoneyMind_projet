@@ -4,29 +4,46 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\User;
+use App\Models\Depance;
 use Carbon\Carbon;
 
 class UpdateSalaryCommand extends Command
 {
+    /**
+     * The name and signature of the console command.
+     *
+     * @var string
+     */
     protected $signature = 'users:update-salary';
-    protected $description = 'Met à jour le montant restant des utilisateurs selon leur date de crédit';
 
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Mise à jour automatique du montant restant selon la date de crédit';
+
+    /**
+     * Execute the console command.
+     */
     public function handle()
     {
         $today = Carbon::now()->day;
         
-        $users = User::whereNotNull('date_credit')
-                    ->whereNotNull('salaire_mensuel')
-                    ->where('date_credit', $today)
-                    ->get();
+        \Log::info("Exécution de la commande de mise à jour des salaires. Jour actuel : " . $today);
 
+        $users = User::where('date_credit', $today)->get();
         $count = 0;
+
         foreach ($users as $user) {
-            $user->montant_restant += $user->salaire_mensuel;
-            $user->save();
-            $count++;
+            Depance::delete_depenses_quotidiennes($user->id);
             
-            $this->info("Salaire mis à jour pour : {$user->name}");
+            $user->salaire_sauve += $user->montant_restant;
+            $user->montant_restant = $user->salaire_mensuel;
+            $user->save();
+            
+            $count++;
+            \Log::info("Salaire mis à jour pour l'utilisateur : {$user->name}");
         }
 
         $this->info("Mise à jour terminée. {$count} utilisateur(s) mis à jour.");

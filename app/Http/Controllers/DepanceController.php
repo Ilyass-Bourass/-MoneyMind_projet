@@ -9,15 +9,26 @@ use App\Models\Categorie;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Services\AiServices;
 
 class DepanceController extends Controller
 {
+    private $aiService;
+
+    public function __construct(AiServices $aiService)
+    {
+        $this->aiService = $aiService;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
         $categories = Categorie::all();
+        $depances=Depance::alldepense();
+        // $advice=$this->aiService->getAdviceAI($depances);
+        // dd($advice);
+        
         $depances_reccurentes=Depance::DepenseRecurrentes()->get();
         $depances_ponctuelles=Depance::DepenseQuotidienne()->get();
         $somme_depense_recurrente = Depance::somme_depense_recurrente();
@@ -64,17 +75,12 @@ class DepanceController extends Controller
         return redirect()->back()->with('success', 'Depance ajoutée avec succès');
     }
 
-    /**
-     * Display the specified resource.
-     */
+ 
     public function show(Depance $depance)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Depance $depance)
     {
         //
@@ -88,9 +94,7 @@ class DepanceController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(Depance $depance)
     {
         $user = User::find(Auth::user()->id);
@@ -98,5 +102,12 @@ class DepanceController extends Controller
         $depance = Depance::find($depance->id);
         $depance->delete();
         return redirect()->back()->with('success', 'Depance supprimée avec succès');
+    }
+
+    public function suggestionAi()
+    {
+        $depances = Depance::alldepense();
+        $advice = $this->aiService->getAdviceAI($depances);
+        return view('user.suggestionAi', compact('advice'));
     }
 }

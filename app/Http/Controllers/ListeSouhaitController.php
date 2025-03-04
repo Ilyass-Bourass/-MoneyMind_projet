@@ -7,6 +7,7 @@ use App\Http\Requests\StoreListeSouhaitRequest;
 use App\Http\Requests\UpdateListeSouhaitRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class ListeSouhaitController extends Controller
 {
@@ -16,7 +17,9 @@ class ListeSouhaitController extends Controller
     public function index()
     {
         $listeSouhaits = ListeSouhait::where('user_id', Auth::id())->get();
-        return view('user.listeSouhait', compact('listeSouhaits'));
+        $salaire_sauve = User::where('id', Auth::id())->first()->salaire_sauve;
+        
+        return view('user.listeSouhait', compact('listeSouhaits', 'salaire_sauve'));
     }
 
     /**

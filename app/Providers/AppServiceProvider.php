@@ -22,7 +22,12 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
-            $schedule->command('users:update-salary')->daily();
+            
+            // Notre commande est déjà programmée ici
+            $schedule->command('users:update-salary')
+                    ->daily()
+                    ->at('11:28')
+                    ->appendOutputTo(storage_path('logs/scheduler.log'));
         });
     }
 }

@@ -35,6 +35,11 @@ class Depance extends Model
         return $query->where('type_depense', 'recurrente')->where('id_user', Auth::user()->id);
     }
 
+    public function scopealldepense($query)
+    {
+        return $query->where('id_user', Auth::user()->id)->get();
+    }
+
     public function scopeDepenseQuotidienne($query)
     {
         return $query->where('type_depense', 'quotidienne')->where('id_user', Auth::user()->id);
@@ -80,6 +85,16 @@ class Depance extends Model
 
         $total = self::where('id_categorie', 2)->where('id_user', Auth::user()->id)->sum('montant');
         return $total;
+    }
+
+    public static function delete_depenses_quotidiennes($user_id){
+        $depenses = self::where('type_depense', 'quotidienne')
+                        ->where('id_user', $user_id)
+                        ->get();
+        
+        foreach ($depenses as $depense) {
+            $depense->delete();
+        }
     }
 
     

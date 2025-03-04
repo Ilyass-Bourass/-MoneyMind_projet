@@ -30,8 +30,10 @@ Route::middleware(['auth'])->group(function () {
 
         $depenses = \App\Models\Depance::get_depance_par_categorie();
         return response()->json($depenses);
-   
+
 })->middleware('auth');
+        
+Route::get('/suggestion-ai',[DepanceController::class,'suggestionAi'])->name('suggestion-ai');
 });
 
 

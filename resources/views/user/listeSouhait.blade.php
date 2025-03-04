@@ -76,7 +76,7 @@
                         <div class="flex justify-between items-start mb-4">
                             <div>
                                 <h3 class="text-lg font-semibold text-gray-900">{{$souhait->nom}}</h3>
-                                <p class="text-gray-500">Épargné: 5000 DH <br> prix_souhait: {{$souhait->montant}} DH</p>
+                                <p class="text-gray-500">salaire sauvgardé: {{$salaire_sauve}} DH <br> prix_souhait: {{$souhait->montant}} DH</p>
                             </div>
                             <div class="flex space-x-2">
                                 <button class="text-gray-400 hover:text-gray-600">
@@ -100,12 +100,12 @@
                                 </div>
                                 <div class="text-right">
                                     <span class="text-xs font-semibold inline-block text-blue-600">
-                                        {{number_format(min((5000 / $souhait->montant * 100), 100), 2)}}%
+                                        {{number_format(min(($salaire_sauve / $souhait->montant * 100), 100), 2)}}%
                                     </span>
                                 </div>
                             </div>
                             <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
-                                <div style="width:{{5000 / $souhait->montant * 100}}% " class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
+                                <div style="width:{{$salaire_sauve / $souhait->montant * 100}}% " class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
                             </div>
                             @if((5000 / $souhait->montant * 100) >= 100)
                                 <div class="text-center mt-4">

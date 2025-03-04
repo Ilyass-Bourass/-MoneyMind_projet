@@ -61,8 +61,8 @@
                             </div>
                             <h3 class="text-xl font-bold text-gray-900">{{$objectif_mensuel}} DH</h3>
                             <div class="mt-2 bg-gray-200 rounded-full h-1.5">
-                                <div class="bg-purple-600 h-1.5 rounded-full" style="width:{{5000/ $objectif_mensuel * 100}}%"></div>
-                            <p class="text-xs text-red-500 mt-1">{{number_format((5000 / $objectif_mensuel * 100), 1)}}% atteint</p>
+                                <div class="bg-purple-600 h-1.5 rounded-full" style="width:{{min(($salaire_sauve / $objectif_mensuel * 100), 100)}}%"></div>
+                            <p class="text-xs text-red-500 mt-1">{{number_format(min(($salaire_sauve / $objectif_mensuel * 100), 100), 1)}}% atteint</p>
                             </div>
                         </div>
 
@@ -72,10 +72,10 @@
                                 <div class="bg-red-50 rounded-lg p-2">
                                     <i class="fas fa-chart-pie text-red-600"></i>
                                 </div>
-                                <span class="text-sm text-gray-500">Dépense Principale</span>
+                                <span class="text-sm text-gray-500">salaire sauvgardé</span>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-900">Alimentation</h3>
-                            <h6 class="text-xl font-bold text-gray-900">{{$total_depense_alimentation}} DH</h6>
+                            <h3 class="text-xl font-bold text-gray-900">salaire sauvgardé</h3>
+                            <h6 class="text-xl font-bold text-gray-900">{{$salaire_sauve}} DH</h6>
                         </div>
                     </div>
 
