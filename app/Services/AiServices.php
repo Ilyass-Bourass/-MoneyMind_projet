@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Services;
-
+use Exception;
 use GuzzleHttp\Client;
 
 class AiServices
@@ -44,7 +44,7 @@ class AiServices
             $responseData = json_decode($response->getBody()->getContents());
             
             
-            \Log::info('API Response:', ['response' => $responseData]);
+           // \Log::info('API Response:', ['response' => $responseData]);
             
             // Vérification et extraction sécurisée des données
             if (isset($responseData->candidates[0]->content->parts[0]->text)) {
@@ -54,7 +54,7 @@ class AiServices
             return "Désolé, impossible d'obtenir des conseils pour le moment.";
             
         } catch (Exception $e) {
-            \Log::error('Erreur API:', ['error' => $e->getMessage()]);
+         //   \Log::error('Erreur API:', ['error' => $e->getMessage()]);
             return "Une erreur s'est produite lors de l'analyse des dépenses.";
         }
     }

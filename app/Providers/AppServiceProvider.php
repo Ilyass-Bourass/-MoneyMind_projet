@@ -20,14 +20,15 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        $this->app->booted(function () {
-            $schedule = $this->app->make(Schedule::class);
+        // $this->app->booted(function () {
+        //     $schedule = $this->app->make(Schedule::class);
             
-            // Notre commande est déjà programmée ici
-            $schedule->command('users:update-salary')
-                    ->daily()
-                    ->at('11:28')
-                    ->appendOutputTo(storage_path('logs/scheduler.log'));
-        });
+        //     // Notre commande est déjà programmée ici
+        //     $schedule->command('users:update-salary')
+        //             ->daily()
+        //             ->at('11:08')
+        //             ->appendOutputTo(storage_path('logs/scheduler.log'));
+
+        // });
     }
 }

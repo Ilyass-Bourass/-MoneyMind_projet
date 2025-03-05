@@ -7,6 +7,9 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepanceController;
 use App\Http\Controllers\ListeSouhaitController;
+use App\Mail\SalaireReçuMail;
+
+use Illuminate\Support\Facades\Mail;
 
 Route::get('/', function () {
     return view('welcome');
@@ -78,6 +81,10 @@ Route::get('admin.settings', [AdminController::class, 'settings'])->name('admin.
 //     Route::get('/settings', [AdminController::class, 'settings'])->name('admin.settings');
 // });
 
+// Route::get('/test-email', function () {
+//     Mail::to('ilyassali223@gmail.com')->send(new SalaireReçuMail('ilyass', 2500,6000));
 
+//     return "Email envoyé avec succès !";
+// });
 
 require __DIR__.'/auth.php';

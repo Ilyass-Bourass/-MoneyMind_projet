@@ -61,7 +61,6 @@ class User extends Authenticatable
     {
         $this->montant_restant -= $montant;
         $this->save();
-        $this->checkDepenseThreshold();
     }
 
     public function augmentation_montant_restant($montant)
@@ -75,13 +74,13 @@ class User extends Authenticatable
         return $this->hasMany(ListeSouhait::class);
     }
 
-    public function checkDepenseThreshold()
-    {
-        $montantUtilise = $this->salaire_mensuel - $this->montant_restant;
-        $pourcentageUtilise = ($montantUtilise / $this->salaire_mensuel) * 100;
+    // public function checkDepenseThreshold()
+    // {
+    //     $montantUtilise = $this->salaire_mensuel - $this->montant_restant;
+    //     $pourcentageUtilise = ($montantUtilise / $this->salaire_mensuel) * 100;
 
-        if ($pourcentageUtilise >= 50) {
-            $this->notify(new DepenseAlerte($this->montant_restant, $this->salaire_mensuel));
-            }
-    }
+    //     if ($pourcentageUtilise >= 50) {
+    //         $this->notify(new DepenseAlerte($this->montant_restant, $this->salaire_mensuel));
+    //         }
+    // }
 }

@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\AiServices;
+use App\Mail\AlerteDepense;
+use Illuminate\Support\Facades\Mail;
 
 class DepanceController extends Controller
 {
@@ -64,6 +66,8 @@ class DepanceController extends Controller
         //dd($request->all());
         $user = User::find(Auth::id());
         $user->diminution_montant_restant($request->montant);
+        $this->checkSold($user);
+
         $depance = new Depance();
         $depance->id_user = Auth::id();
         $depance->titre = $request->titre;
@@ -72,6 +76,7 @@ class DepanceController extends Controller
         $depance->id_categorie = $request->id_categorie;
         $depance->type_depense = $request->type_depanse;
         $depance->save();
+
         return redirect()->back()->with('success', 'Depance ajoutée avec succès');
     }
 
@@ -110,4 +115,12 @@ class DepanceController extends Controller
         $advice = $this->aiService->getAdviceAI($depances);
         return view('user.suggestionAi', compact('advice'));
     }
+
+    private function checkSold($user){
+        if($user->montant_restant<=0.5*$user->salaire_mensuel){
+            Mail::to($user->email)->send(new AlerteDepense($user->name, $user->montant_restant));
+        }
+    }
+
+   
 }

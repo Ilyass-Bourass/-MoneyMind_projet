@@ -6,6 +6,9 @@ use Illuminate\Console\Command;
 use App\Models\User;
 use App\Models\Depance;
 use Carbon\Carbon;
+use App\Mail\SalaireReçuMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class UpdateSalaryCommand extends Command
 {
@@ -30,7 +33,7 @@ class UpdateSalaryCommand extends Command
     {
         $today = Carbon::now()->day;
         
-        \Log::info("Exécution de la commande de mise à jour des salaires. Jour actuel : " . $today);
+       Log::info("Exécution de la commande de mise à jour des salaires. Jour actuel : " . $today);
 
         $users = User::where('date_credit', $today)->get();
         $count = 0;
@@ -43,9 +46,10 @@ class UpdateSalaryCommand extends Command
             $user->save();
             
             $count++;
-            \Log::info("Salaire mis à jour pour l'utilisateur : {$user->name}");
+            Log::info("Salaire mis à jour pour l'utilisateur : {$user->name}");
+            Mail::to($user->email)->send(new SalaireReçuMail($user->name,$user->salaire_mensuel,$user->salaire_sauve));
+            $this->info("Mise à jour terminée. {$count} utilisateur(s) mis à jour.");
         }
-
-        $this->info("Mise à jour terminée. {$count} utilisateur(s) mis à jour.");
+       
     }
 }
