@@ -21,6 +21,14 @@
             <span class="font-medium group-hover:text-indigo-600 transition-colors">Tableau de bord</span>
         </a>
 
+        <!-- Gestion des revenus (Nouveau) -->
+        <a href="{{ route('gestionRevenus') }}" class="group flex items-center space-x-3 px-4 py-3.5 rounded-xl text-gray-600 hover:bg-gradient-to-r hover:from-yellow-50 hover:to-amber-50 transition-all duration-300">
+            <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-tr from-yellow-100 to-amber-100 group-hover:from-yellow-200 group-hover:to-amber-200 transition-all duration-300">
+                <i class="fas fa-coins text-amber-600 group-hover:scale-110 transition-transform"></i>
+            </div>
+            <span class="font-medium group-hover:text-amber-600 transition-colors">Gestion des revenus</span>
+        </a>
+
         <!-- Gestion des dépenses -->
         <a href="{{ route('depance') }}" class="group flex items-center space-x-3 px-4 py-3.5 rounded-xl text-gray-600 hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 transition-all duration-300">
             <div class="flex items-center justify-center w-10 h-10 rounded-lg bg-gradient-to-tr from-green-100 to-emerald-100 group-hover:from-green-200 group-hover:to-emerald-200 transition-all duration-300">

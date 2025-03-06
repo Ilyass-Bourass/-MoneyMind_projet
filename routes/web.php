@@ -7,6 +7,8 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DepanceController;
 use App\Http\Controllers\ListeSouhaitController;
+use App\Http\controllers\GestionRevenusController;
+use App\Models\Depance;
 use App\Mail\SalaireReçuMail;
 
 use Illuminate\Support\Facades\Mail;
@@ -21,17 +23,25 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     
-    Route::get('/dashboard_user',[UserController::class,'index'])->name('dashboard_user');
-    
+   Route::get('/dashboard_user',[UserController::class,'index'])->name('dashboard_user');
+
+   Route::get('/GestionRevenus',[GestionRevenusController::class,'index'])->name('gestionRevenus');
+   Route::post('/gestionRevenus/store',[GestionRevenusController::class,'store'])->name('gestionRevenus.store');
+   Route::get('/gestionRevenus/edit/{id}',[GestionRevenusController::class,'edit'])->name('gestionsRevenus.edit');
+   Route::put('/gestionRevenus/update/{gestionRevenu}',[GestionRevenusController::class,'update'])->name('gestionRevenus.update');
+   Route::delete('/getsionsRevenus/destroy/{id}',[GestionRevenusController::class,'destroy'])->name('gestionsRevenus.destroy');
+
    Route::get('/depance',[DepanceController::class,'index'])->name('depance');
    Route::post('/depance/store', [DepanceController::class, 'store'])->name('depance.store');
    Route::delete('/depance/destroy/{depance}', [DepanceController::class, 'destroy'])->name('depance.destroy');
+
    Route::get('/listeSouhait',[ListeSouhaitController::class,'index'])->name('listeSouhait');
    Route::post('/listeSouhait/store', [ListeSouhaitController::class, 'store'])->name('listeSouhait.store');
    Route::delete('/listeSouhait/destroy/{id}', [ListeSouhaitController::class, 'destroy'])->name('listeSouhait.destroy');
+
    Route::get('/get-depance-par-categorie', function() {
 
-        $depenses = \App\Models\Depance::get_depance_par_categorie();
+        $depenses =Depance::get_depance_par_categorie();
         return response()->json($depenses);
 
 })->middleware('auth');

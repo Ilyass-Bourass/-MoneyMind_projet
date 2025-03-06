@@ -74,6 +74,10 @@ class User extends Authenticatable
         return $this->hasMany(ListeSouhait::class);
     }
 
+    public function GestionRevenus(){
+        $this->hasMany(GestionRevenus::class);
+    }
+
     // public function checkDepenseThreshold()
     // {
     //     $montantUtilise = $this->salaire_mensuel - $this->montant_restant;

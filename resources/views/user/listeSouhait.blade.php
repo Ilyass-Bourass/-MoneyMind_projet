@@ -82,7 +82,7 @@
                                 <button class="text-gray-400 hover:text-gray-600">
                                     <i class="fas fa-edit"></i>
                                 </button>
-                                <form action="{{route('listeSouhait.destroy', $souhait->id)}}" method="POST">   
+                                <form action="{{ route('listeSouhait.destroy', $souhait->id)}} " method="POST">   
                                     @csrf
                                     @method('DELETE')
                                     <button class="text-gray-400 hover:text-red-600">
@@ -107,7 +107,7 @@
                             <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-blue-200">
                                 <div style="width:{{$salaire_sauve / $souhait->montant * 100}}% " class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-blue-500"></div>
                             </div>
-                            @if((5000 / $souhait->montant * 100) >= 100)
+                            @if(($salaire_sauve / $souhait->montant * 100) >= 100)
                                 <div class="text-center mt-4">
                                     <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out transform hover:scale-105">
                                         <i class="fas fa-shopping-cart mr-2"></i>
