@@ -33,7 +33,7 @@ class DepanceController extends Controller
         
         $depances_reccurentes=Depance::DepenseRecurrentes()->get();
         $depances_ponctuelles=Depance::DepenseQuotidienne()->get();
-        $somme_depense_recurrente = Depance::somme_depense_recurrente();
+        $somme_depense_recurrente = Depance::somme_depense_recurrente(Auth::id());
         $somme_depense_quotidienne = Depance::somme_depense_quotidienne();
         $pourcentage_depense_quotidienne = Depance::pourcentage_depense_quotidienne();
         $pourcentage_depense_recurrente = Depance::pourcentage_depense_recurrente();    

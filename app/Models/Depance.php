@@ -45,9 +45,10 @@ class Depance extends Model
         return $query->where('type_depense', 'quotidienne')->where('id_user', Auth::user()->id);
     }
 
-    public static function somme_depense_recurrente()
+    public static function somme_depense_recurrente($user_id)
     {
-        return self::where('type_depense', 'recurrente')->where('id_user', Auth::user()->id)->sum('montant');
+        // dd(Auth::id());
+        return self::where('type_depense', 'recurrente')->where('id_user', $user_id)->sum('montant');
     }
 
     public static function somme_depense_quotidienne()
@@ -64,7 +65,7 @@ class Depance extends Model
 
     public static function pourcentage_depense_recurrente()
     {
-        $somme_depense_recurrente = self::somme_depense_recurrente();
+        $somme_depense_recurrente = self::somme_depense_recurrente(auth::user()->id);
         $montant_restant = User::find(Auth::user()->id)->salaire_mensuel;
         return ($somme_depense_recurrente / $montant_restant) * 100;
     }

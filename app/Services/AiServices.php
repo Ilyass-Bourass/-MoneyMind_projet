@@ -43,7 +43,7 @@ class AiServices
             
             $responseData = json_decode($response->getBody()->getContents());
             
-            
+            //dd($responseData );
            // \Log::info('API Response:', ['response' => $responseData]);
             
             // Vérification et extraction sécurisée des données

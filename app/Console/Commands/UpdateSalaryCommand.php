@@ -9,6 +9,8 @@ use Carbon\Carbon;
 use App\Mail\SalaireReçuMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+
 
 class UpdateSalaryCommand extends Command
 {
@@ -43,6 +45,7 @@ class UpdateSalaryCommand extends Command
             
             $user->salaire_sauve += $user->montant_restant;
             $user->montant_restant = $user->salaire_mensuel;
+            $user->montant_restant -= Depance::somme_depense_recurrente($user->id);
             $user->save();
             
             $count++;
